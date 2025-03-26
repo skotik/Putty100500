@@ -73,6 +73,7 @@ static filereq_saved_dir *keypath = NULL;
 #define PUTTY_REGKEY      "Software\\SimonTatham\\PuTTY\\Sessions"
 #define PUTTY_DEFAULT     "Default%20Settings"
 static int initial_menuitems_count;
+static int menuitems_split_at = 0 ;
 
 /*
  * Print a modal (Really Bad) message box and perform a fatal exit.
@@ -902,7 +903,7 @@ static void update_sessions(void)
             mii.cbSize = sizeof(mii);
             mii.fMask = MIIM_TYPE | MIIM_STATE | MIIM_ID;
             mii.fType = MFT_STRING;
-            if (index_menu == 40) {
+            if (menuitems_split_at > 0 && index_menu % menuitems_split_at == 0 ) {
                 mii.fType = MFT_STRING | MFT_MENUBARBREAK;
             }
             mii.fState = MFS_ENABLED;
@@ -1610,6 +1611,8 @@ int WINAPI WinMain(HINSTANCE inst, HINSTANCE prev, LPSTR cmdline, int show)
              * Unicode version of connect() that lets you give a
              * Unicode pathname when making an AF_UNIX socket? */
             unixsocket = cmdline_arg_to_str(valarg);
+        } else if (match_optval("-split")) {
+            menuitems_split_at = atoi(cmdline_arg_to_str(valarg));
         } else if (match_opt("-c")) {
             /*
              * If we see `-c', then the rest of the command line
