@@ -903,7 +903,7 @@ static void update_sessions(void)
             mii.cbSize = sizeof(mii);
             mii.fMask = MIIM_TYPE | MIIM_STATE | MIIM_ID;
             mii.fType = MFT_STRING;
-            if (menuitems_split_at > 0 && index_menu % menuitems_split_at == 0 ) {
+            if (menuitems_split_at > 0 && index_menu > 0 && index_menu % menuitems_split_at == 0 ) {
                 mii.fType = MFT_STRING | MFT_MENUBARBREAK;
             }
             mii.fState = MFS_ENABLED;
