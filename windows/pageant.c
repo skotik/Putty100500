@@ -902,6 +902,9 @@ static void update_sessions(void)
             mii.cbSize = sizeof(mii);
             mii.fMask = MIIM_TYPE | MIIM_STATE | MIIM_ID;
             mii.fType = MFT_STRING;
+            if (index_menu == 40) {
+                mii.fType = MFT_STRING | MFT_MENUBARBREAK;
+            }
             mii.fState = MFS_ENABLED;
             mii.wID = (index_menu * 16) + IDM_SESSIONS_BASE;
             mii.dwTypeData = sb->s;
